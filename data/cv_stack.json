@@ -1,0 +1,126 @@
+[{
+    "date": 1992,
+    "Rodenskolan i Norrtälje": 1
+}, {
+    "date": 1993,
+    "Rodenskolan i Norrtälje": 1
+}, {
+    "date": 1994,
+    "Rodenskolan i Norrtälje": 1
+}, {
+    "date": 1995,
+    "Rodenskolan i Norrtälje": 0.5,
+    "Värnplikt": 0.5
+}, {
+    "date": 1996,
+    "Värnplikt": 0.5,
+    "Uppsala Universitet": 0.5
+}, {
+    "date": 1997,
+    "TextCenter AB": 0.1,
+    "Uppsala Universitet": 1
+}, {
+    "date": 1998,
+    "TextCenter AB": 0.25,
+    "Uppsala Universitet": 1
+}, {
+    "date": 1999,
+    "Uppsala Universitet": 0.5,
+    "TextCenter AB": 0.25,
+    "Primona AB": 0.25
+}, {
+    "date": 2000,
+    "Uppsala Universitet": 0.75,
+    "TextCenter AB": 0.25
+}, {
+    "date": 2001,
+    "Uppsala Universitet": 0.8,
+    "TextCenter AB": 0.2
+}, {
+    "date": 2002,
+    "Uppsala Universitet": 0.9,
+    "TextCenter AB": 0.1
+}, {
+    "date": 2003,
+    "Uppsala Universitet": 0.25,
+    "TextCenter AB": 0.75
+}, {
+    "date": 2004,
+    "Uppsala Universitet": 0.2,
+    "TextCenter AB": 0.8
+}, {
+    "date": 2005,
+    "Uppsala Universitet": 0.15,
+    "TextCenter AB": 0.15,
+    "ByteWize AB": 0.3,
+    "Nordic Touch AB": 0.4
+}, {
+    "date": 2006,
+    "Nordic Touch AB": 1
+}, {
+    "date": 2007,
+    "Nordic Touch AB": 1
+}, {
+    "date": 2008,
+    "Nordic Touch AB": 0.75,
+    "CONNECT Sverige": 0.25,
+    "Spherofix AB": 0.1
+}, {
+    "date": 2009,
+    "Nordic Touch AB": 0.25,
+    "CONNECT Sverige": 0.55,
+    "SEB (konsult)": 0.1,
+    "Spherofix AB": 0.1
+}, {
+    "date": 2010,
+    "SEB (konsult)": 1,
+    "Spherofix AB": 0.1,
+    "Rätt Spår AB": 0.1
+}, {
+    "date": 2011,
+    "SEB (konsult)": 1,
+    "Spherofix AB": 0.1,
+    "Rätt Spår AB": 0.1
+
+}, {
+    "date": 2012,
+    "SEB (konsult)": 0.5,
+    "SEB (arkitekt)": 0.5,
+    "Spherofix AB": 0.1,
+    "Rätt Spår AB": 0.1
+
+}, {
+    "date": 2013,
+    "SEB (arkitekt)": 1,
+    "Spherofix AB": 0.1,
+    "Rätt Spår AB": 0.1
+
+
+}, {
+    "date": 2014,
+    "SEB (arkitekt)": 0.9,
+    "Certifierad IT-arkitekt": 0.1,
+    "Spherofix AB": 0.1,
+    "Rätt Spår AB": 0.1
+
+
+}, {
+    "date": 2015,
+    "SEB (arkitekt)": 1,
+    "Spherofix AB": 0.1,
+    "Rätt Spår AB": 0.1
+
+
+}, {
+    "date": 2016,
+    "SEB (intraprenör)": 1,
+    "Spherofix AB": 0.1,
+    "Rätt Spår AB": 0.1
+}, {
+    "date": 2017,
+    "SEB (intraprenör)": 1,
+    "Spherofix AB": 0.1,
+    "Rätt Spår AB": 0.1
+}, {
+    "date": 2018
+}]

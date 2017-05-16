@@ -1,0 +1,225 @@
+body {
+    color: #fff;
+}
+
+h1 {
+    position: relative;
+    font-size: 3em;
+    font-weight: 200;
+    letter-spacing: -2px;
+    bottom: -7px;
+    color: #999;
+}
+
+h2 {
+    font-size: 2.6em;
+}
+
+
+.box {
+    text-align: center;
+    font-size: 2em;
+    text-transform: uppercase;
+}
+
+.Loan {
+    background-color: #673ab6;
+}
+
+.Payment {
+    background-color: #f03529;
+}
+
+.Card {
+    background-color: #ffc500;
+}
+
+.Saving {
+    background-color: #ffc500;
+}
+
+#logo {
+    position: absolute;
+    background-image: url(../img/seb_logo_altgreen.jpg);
+    background-repeat: no-repeat;
+    width: 186px;
+    height: 150px;
+    right: 70px;
+    -webkit-box-shadow: 0px 0px 65px -3px rgba(0, 0, 0, 0.76);
+    -moz-box-shadow: 0px 0px 65px -3px rgba(0, 0, 0, 0.76);
+    box-shadow: 0px 0px 65px -3px rgba(0, 0, 0, 0.76);
+    z-index: 2;
+}
+
+.preamble {
+    position: relative;
+    top: 30px;
+}
+
+.switch label {
+    color: #e4f1d6;
+}
+
+.greenfield {
+    background: url(../img/greenfield.jpg) no-repeat;
+    background-size: cover;
+    background-position: 50% 0%;
+    padding: 100px 0 280px 0;
+    position: relative;
+    height: 100vh;
+    min-height: 900px;
+    /*    z-index:-2;*/
+}
+
+.greenfield .byline {
+    background-color: #b4583f;
+}
+
+.sectionputty {
+    position: relative;
+    z-index: 1;
+}
+
+.bluefield {
+    color: #d6f1ef;
+    background: url(../img/bluefield.jpg) no-repeat;
+    background-size: cover;
+    background-position: 50% 0%;
+    padding: 100px 0 280px 0;
+    position: relative;
+    height: 100vh;
+    min-height: 900px;
+    /*    z-index:-2;*/
+}
+
+.bluefield .byline {
+    background-color: #671f82;
+}
+
+.yellowfield {
+    color: #fff9ea;
+    background: url(../img/yellowerfield.jpg) no-repeat;
+    background-size: cover;
+    background-position: 50% 0%;
+    padding: 100px 0 280px 0;
+    position: relative;
+    height: 100vh;
+    min-height: 900px;
+    /*    z-index:-2;*/
+}
+
+.yellowfield .byline {
+    background-color: #c38a00;
+}
+
+.teams {
+    position: absolute;
+    top: 0;
+}
+
+.redfield {
+    color: #fffafa;
+    background: url(../img/redfield.jpg) no-repeat;
+    background-size: cover;
+    background-position: 50% 0%;
+    padding: 100px 0 280px 0;
+    position: relative;
+    height: 100vh;
+    min-height: 900px;
+    /*    z-index:-2;*/
+}
+
+.redfield .byline {
+    background-color: #519526;
+}
+
+.redfield p a {
+    color: #ff9c9c
+}
+
+.byline {
+    display: inline;
+    padding: 0 12px 0 12px;
+    line-height: 0.5;
+    color: #fff;
+    font-weight: 200;
+    letter-spacing: -2px;
+}
+
+label {
+    color: inherit;
+}
+
+.checkgreen[type="checkbox"].filled-in:checked + label:after {
+    border: 2px solid #dcedc8;
+    background-color: #dcedc8;
+}
+
+.blackline {
+    padding: 12px 12px 12px 12px;
+    color: #fff;
+    background-color: #333;
+}
+
+.heroheader .byline {
+    margin-left: 2.5em;
+}
+
+.metrics {
+    width: 110px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-top: 80px
+}
+
+.metrics h5 {
+    font-size: 1.8em;
+    margin-bottom: 0;
+    line-height: 0.7;
+}
+
+.metrics .card {
+    background-color: #94AF5E;
+    margin-bottom: 10px;
+}
+
+.metrics .card-title {
+    font-size: 3.6em;
+    font-weight: 700;
+    letter-spacing: -1px;
+}
+
+.metrics .card p {
+    font-size: 1.5em;
+    margin: 0;
+    position: relative;
+    top: -9px;
+    line-height: 0.9;
+    font-weight: 300;
+}
+
+.heroimage {
+    position: relative;
+    /*    z-index: -1;*/
+}
+
+p {
+    font-size: 1.25em;
+    line-height: 1.2em;
+    margin-top: 0;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+}
+
+footer.page-footer {
+    margin-top: 0;
+    background-color: #333;
+    background: url(../img/footerfield.jpg) no-repeat;
+    background-position: 50% 0%;
+    position: relative;
+}
+
+.chart {
+    position: absolute;
+}

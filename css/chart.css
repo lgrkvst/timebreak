@@ -1,0 +1,172 @@
+svg {
+    position: relative;
+    top: -77px;
+}
+
+.zoom {
+    cursor: move;
+    fill: none;
+    pointer-events: all;
+}
+
+
+/* <AXIS> */
+
+.axis line {
+    stroke: white;
+}
+
+.axis path {
+    stroke: #ddd;
+}
+
+path.points {
+    fill: white;
+}
+
+.workarea {
+    stroke: #ffb070;
+    stroke-width: 0.3;
+}
+
+
+/*
+  ,,           ,,                  ,,
+`7MM          *MM                `7MM
+  MM           MM                  MM
+  MM   ,6"Yb.  MM,dMMb.   .gP"Ya   MM
+  MM  8)   MM  MM    `Mb ,M'   Yb  MM
+  MM   ,pm9MM  MM     M8 8M""""""  MM
+  MM  8M   MM  MM.   ,M9 YM.    ,  MM
+.JMML.`Moo9^Yo.P^YbmdP'   `Mbmmd'.JMML.
+
+*/
+
+.nowpath {
+    stroke: #444;
+    stroke-width: 2px;
+    fill: none;
+}
+
+.now rect {
+    fill: #444;
+    stroke: none;
+}
+
+.now text {
+    fill: white;
+    stroke: none;
+    font-family: helvetica, sans-serif;
+    font-size: 11px;
+}
+
+.worklabel rect {
+    fill: #e25609;
+}
+
+.studyarea,
+.hobbyarea {
+    stroke: #5e8197;
+    stroke-width: 0.3;
+}
+
+.studylabel rect {
+    fill: #368eb0;
+}
+
+.hobbylabel rect {
+    fill: #555;
+}
+
+.focus .axis--x text {
+    fill: #ddd;
+    font-family: 'Roboto Slab', optima, tahoma, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.focus .axis--y text {
+    fill: #444;
+    font-family: 'Roboto Slab', optima, tahoma, sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.context .axis--x text {
+    fill: #666;
+    font-size: 12px;
+}
+
+.focus .axis--x path.domain {
+    fill: #444;
+    stroke: none;
+}
+
+.label {
+    fill: #fff;
+}
+
+.label text {
+    font-size: 12px;
+    fill: white;
+    text-anchor: middle;
+}
+
+.singleevent_line {
+    stroke-width: 1px;
+    stroke: #e4f1d6;
+    stroke-dasharray: 5 2;
+}
+
+.contextcircle {
+    fill: #e4f1d6;
+}
+
+.context path {
+    stroke-width: 2px;
+}
+
+.processheader {
+    fill: #e4f1d6;
+    opacity: 1;
+    font-weight: 700;
+    letter-spacing: -4px;
+    opacity: 0.2;
+}
+
+.main {
+    color: #ccc;
+}
+
+
+/*
+    ,...
+  .d' ""
+  dM`
+ mMMmm,pW"Wq.`7Mb,od8 ,p6"bo   .gP"Ya
+  MM 6W'   `Wb MM' "'6M'  OO  ,M'   Yb
+  MM 8M     M8 MM    8M       8M""""""
+  MM YA.   ,A9 MM    YM.    , YM.    ,
+.JMML.`Ybmd9'.JMML.   YMbmd'   `Mbmmd'
+
+*/
+
+.event path {
+    stroke: #444;
+    stroke-dasharray: 1 2;
+    stroke-width: 0.75;
+    fill: none;
+}
+
+.event text,
+.event foreignObject {
+    font-size: 10px;
+    color: black;
+    line-height: 1em;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-weight: 200;
+    font-family: helvetica, sans-serif;
+}

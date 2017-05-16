@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="msapplication-tap-highlight" content="no">
+<meta name="description" content="Continuous Delivery Home">
+<title>Timebreak</title>
+<link rel="stylesheet" href="materialize/css/materialize.css">
+<link rel="stylesheet" href="css/greenfield.css">
+<link rel="stylesheet" href="css/chart.css">
+</head>
+
+<body>
+<section class="main">
+<div class="row center">
+<h1>timebreak</h1>
+<!-- <h2>goes Vertical</h2> -->
+</div>
+</section>
+<section id="events">
+    <div class="row">
+        <div class="col m4 saving box">Spara</div>
+        <div class="col m4 payment box">Betala</div>
+        <div class="col m4 loan box">Låna</div>
+    </div>
+</section>
+</body>
+<script src="js/lib/d3.min.js"></script>
+<script src="http://localhost:8080/d3-shape-1.0.4/build/d3-shape.js"></script>
+<script src="js/lib/d3-scale-chromatic.v1.min.js"></script>
+<script src="js/lib/dat.gui.min.js"></script>
+<script>
+var db_url = 'http://hackathon.o-o.se:8280/timeline/1.0.0/events/4';
+var stack;
+d3.queue()
+    .defer(d3.json, db_url)
+    .await(drawTimeline);
+
+function drawTimeline(error, records, descriptions) {
+    if (error) throw new Error("no data");
+    stack = records.Records.Record;
+    stack.forEach(event => {
+        event.RDateTime = new Date(event.RDateTime);
+    });
+
+    var dom_root = d3.select("#events").selectAll("div").data(stack);
+    dom_root = dom_root.enter().append("div").attr("class", "row")
+        .append("div").attr("class", o => "col m4 box " + o.RType)
+        .text(o => o.RecipientName);
+
+    // var workcolor = d3.scaleSequential(d3.interpolateOranges).domain([0, 10]);
+    // var studycolor = d3.scaleSequential(d3.interpolateBlues).domain([5, -5]);
+    // var hobbycolor = d3.scaleSequential(d3.interpolateGreys).domain([1, 8]);
+}
+
+</script>
