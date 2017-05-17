@@ -14,18 +14,19 @@
 </head>
 
 <body>
-<section class="main">
-<div class="row center">
-<h1>timebreak</h1>
+<div id="logo"></div>
+<section class="greenfield">
+<div class="row">
+<div class="container headerpadding">
+<div class="col s12">
+
+<h2>Timebreak</h2>
 <!-- <h2>goes Vertical</h2> -->
+</div>
+</div>
 </div>
 </section>
 <section id="events">
-    <div class="row">
-        <div class="col m4 saving box">Spara</div>
-        <div class="col m4 payment box">Betala</div>
-        <div class="col m4 loan box">Låna</div>
-    </div>
 </section>
 </body>
 <script src="js/lib/d3.min.js"></script>
@@ -33,23 +34,29 @@
 <script src="js/lib/d3-scale-chromatic.v1.min.js"></script>
 <script src="js/lib/dat.gui.min.js"></script>
 <script>
-var db_url = 'http://hackathon.o-o.se:8280/timeline/1.0.0/events/4';
+//var db_url = 'http://hackathon.o-o.se:8280/timeline/1.0.0/events/3';
+var db_url = 'data/data.json';
 var stack;
 d3.queue()
     .defer(d3.json, db_url)
     .await(drawTimeline);
 
-function drawTimeline(error, records, descriptions) {
-    if (error) throw new Error("no data");
-    stack = records.Records.Record;
+function drawTimeline(error, stack, descriptions) {
+    stack = stack;
     stack.forEach(event => {
-        event.RDateTime = new Date(event.RDateTime);
+        event.date = new Date(event.date);
     });
 
     var dom_root = d3.select("#events").selectAll("div").data(stack);
-    dom_root = dom_root.enter().append("div").attr("class", "row")
-        .append("div").attr("class", o => "col m4 box " + o.RType)
-        .text(o => o.RecipientName);
+    dom_root = dom_root.enter().append("div").attr("class", o => "row " + o.type);
+    dom_root.append("span").attr("class", "title right").text(o => o.title).append("div").attr("class", "subtitle").text(o => o.subtitle);
+    dom_root.selectAll("div").data(o => o.events).enter()
+        .append("div").attr("class", o => "col s12 box pane " + o.actor)
+        .each(function(o) {
+            d3.select(this).text(o => o.event).append("img").attr("src", o => "img/" + o.actor + ".png").attr("class", "left lane");
+            d3.select(this).append("span").attr("class", "right").text(o.date.substring(0,10));
+
+        });
 
     // var workcolor = d3.scaleSequential(d3.interpolateOranges).domain([0, 10]);
     // var studycolor = d3.scaleSequential(d3.interpolateBlues).domain([5, -5]);

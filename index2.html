@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="msapplication-tap-highlight" content="no">
+<meta name="description" content="Continuous Delivery Home">
+<title>Time Beads &mdash; Lab Ground</title>
+<link rel="stylesheet" href="materialize/css/materialize.css">
+<link rel="stylesheet" href="css/greenfield.css">
+<style>
+.zoom {
+    cursor: move;
+    fill: none;
+    pointer-events: all;
+}
+
+
+/* <AXIS> */
+
+.axis line {
+    stroke: 000;
+}
+
+.axis path {
+    stroke: #000;
+}
+
+path.bead {
+    fill: none;
+    stroke: #928;
+    stroke-width: 2px;
+    clip-path: url(#clip);
+}
+
+path.shadowbead {
+    fill: none;
+    stroke: black;
+}
+
+circle.bead {
+    stroke: #000;
+    stroke-width: 3px;
+    clip-path: url(#clip);
+    fill: #fff;
+}
+
+path.points {
+    fill: white;
+}
+
+.axis text {
+    font-family: 'Roboto Slab', optima, tahoma, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.focus .axis--x path.domain {
+}
+
+rect.label {
+    fill:none;
+}
+
+.label text {
+    font-size: 10px;
+    fill:#000;
+}
+
+.singleevent_line {
+    stroke-width: 1px;
+    stroke: #e4f1d6;
+    stroke-dasharray: 5 2;
+}
+
+.contextcircle {
+    fill: #e4f1d6;
+}
+
+.outercircle {
+    fill: #928;
+}
+
+.innercircle {
+    fill: #fff;
+}
+
+.context path {
+    stroke-width: 2px;
+}
+
+.processheader {
+    fill: #e4f1d6;
+    opacity: 1;
+    font-weight: 700;
+    letter-spacing: -4px;
+    opacity: 0.2;
+}
+
+/* </AXIS> */
+</style>
+</head>
+
+<body>
+<div id="logo"></div>
+<section class="greenfield">
+<div class="container paddingtop">
+<div class="row">
+<div class="col s12">
+<h2>Timebreak</h2>
+</div>
+</div>
+<div class="row">
+<svg width="900" height="400">
+<defs>
+<filter id="dropshadow" height="200%">
+<feGaussianBlur in="SourceAlpha" stdDeviation="3" />
+<!-- stdDeviation is how much to blur -->
+<feOffset dx="0" dy="0" result="offsetblur" />
+<!-- how much to offset -->
+<feMerge>
+<feMergeNode/>
+<!-- this contains the offset blurred image -->
+<feMergeNode in="SourceGraphic" />
+<!-- this contains the element that the filter is applied to -->
+</feMerge>
+</filter>
+<linearGradient id="weekday" x1="50%" y1="100%" x2="50%" y2="0%">
+<stop offset="0%" style="stop-color:black;stop-opacity:0" />
+<stop offset="50%" style="stop-color:black;stop-opacity:0.5" />
+<stop offset="100%" style="stop-color:black;stop-opacity:0" />
+</linearGradient>
+<linearGradient id="weekend" x1="50%" y1="100%" x2="50%" y2="0%">
+<stop offset="0%" style="stop-color:black;stop-opacity:0" />
+<stop offset="50%" style="stop-color:black;stop-opacity:0.5" />
+<stop offset="100%" style="stop-color:black;stop-opacity:0" />
+</linearGradient>
+</defs>
+</svg>
+</div>
+</div>
+</section>
+</body>
+<script src="js/lib/d3.min.js"></script>
+<script src="http://localhost:8080/d3-shape-1.0.4/build/d3-shape.js"></script>
+<script>
+var svg = d3.select("svg"),
+    margin = {
+        top: 20,
+        right: 20,
+        bottom: 70,
+        left: 40
+    },
+    margin2 = {
+        top: 330,
+        right: 20,
+        bottom: 30,
+        left: 40
+    },
+    width = +svg.attr("width") - margin.left - margin.right,
+    height = +svg.attr("height") - margin.top - margin.bottom,
+    height2 = +svg.attr("height") - margin2.top - margin2.bottom;
+
+var parseDate = d3.timeParse("%b %Y");
+
+var x = d3.scaleTime().range([0, width]),
+    x2 = d3.scaleTime().range([0, width]),
+    y = d3.scaleLinear().range([height, 0]),
+    y2 = d3.scaleLinear().range([height2, 0]);
+
+var startRange = [-30, width+30];
+
+var xAxis = d3.axisBottom(x).ticks(7),
+    xAxis2 = d3.axisBottom(x2),
+    yAxis = d3.axisLeft(y);
+
+var brush = d3.brushX()
+    .extent([
+        [0, 0],
+        [width, height2]
+    ])
+    .on("brush end", brushed);
+
+var zoom = d3.zoom()
+    .scaleExtent([1, Infinity])
+    .translateExtent([
+        [0, 0],
+        [width, height]
+    ])
+    .extent([
+        [0, 0],
+        [width, height]
+    ])
+    .on("zoom", zoomed);
+
+var area2 = d3.area()
+    .curve(d3.curveMonotoneX)
+    .x(function(d) {
+        return x2(d.date);
+    })
+    .y0(height2)
+    .y1(function(d) {
+        return y2(d.price);
+    });
+
+svg.append("defs").append("clipPath")
+    .attr("id", "clip")
+    .append("rect")
+    .attr("width", width)
+    .attr("height", height);
+
+var focus = svg.append("g")
+    .attr("class", "focus")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var context = svg.append("g")
+    .attr("class", "context")
+    .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+
+
+function axis_callback() {
+    // fix x-axis into bar:
+    d3.select(".focus").select("path.domain").attr("d", "M0,0L0,28L840,28L840,0Z").style("filter", "url(#dropshadow)");
+
+    // draw daylines
+    var daylines = focus.selectAll("rect.dayline").data(x.ticks(d3.timeDay, 1));
+    var daywidth = x(x.ticks(d3.timeDay, 1)[1]) - x(x.ticks(d3.timeDay, 1)[0]);
+    daylines.exit().remove();
+    daylines = daylines.enter()
+        .insert("rect", ":first-child")
+        .attr("class", "dayline")
+        .style("opacity", "0")
+        .merge(daylines);
+    daylines
+        .style("fill", "url(#weekday)")
+        .style("opacity", o => o.getDay() === 6 || o.getDay() === 0 ? "0.3" : "0.6")
+        .attr("x", o => x(o) - daywidth)
+        .attr("y", 0)
+        .attr("width", daywidth - 3)
+        .attr("height", height);
+
+    // print weekdays
+    if (daywidth > 12) {
+
+    }
+
+    var dates = [];
+
+    // display process
+    d3.selectAll("path.process")
+        .attr("d", d => {
+            dates = d3.extent(d.values, v => v.date).map(date => x(date + "000"));
+            var halfway = (dates[1] - dates[0]) / 2;
+            return "M" + dates[0] + "," + (y.range()[1] + margin.top) +
+                "L" + dates[0] + "," + y(stepHeight(d.values[d.values.length - 1])) +
+                "M" + dates[1] + "," + (y.range()[1] + margin.top) +
+                "L" + dates[1] + "," + y(stepHeight(d.values[d.values.length - 1]));
+        });
+
+    d3.selectAll("path.processheader")
+        .attr("d", d => {
+            var dates = d3.extent(d.values, v => v.date).map(date => x(date + "000"));
+            var halfway = (dates[1] - dates[0]) / 2;
+            return "M" + (dates[0] - 1) + "," + (y.range()[1]) +
+                "L" + (dates[1] + 1) + "," + (y.range()[1]) +
+                "l0," + margin.top +
+                "L" + (dates[0] - 1) + "," + (y.range()[1] + margin.top);
+        });
+
+    d3.selectAll("text.processheader")
+        .attr("x", d => {
+            var dates = d3.extent(d.values, v => v.date).map(date => x(date + "000"));
+            var halfway = (dates[1] + dates[0]) / 2;
+            return halfway;
+        })
+        .attr("y", y.range()[1] + 15)
+        .text("Bolånelöfte");
+}
+
+function stepHeight(logentry) {
+
+    if (logentry["type"] == "Inloggning") {
+        return -3;
+    }
+    if (logentry["type"] == "Ansökan") {
+        return -2;
+    }
+    if (logentry["type"] == "Medsignering") {
+        return -1;
+    }
+    if (logentry["type"] == "Registrering") {
+        return -1;
+    }
+    if (logentry["type"] == "Begäran") {
+        return 1;
+    }
+    if (logentry["type"] == "Komplettering") {
+        return -2;
+    }
+    if (logentry["type"] == "Beredning") {
+        return 1;
+    }
+    if (logentry["type"] == "Beslut") {
+        return 2;
+    }
+    if (logentry["type"] == "Lånelöfte") {
+        return -2;
+    }
+    console.warn("unknown logentry: " + logentry["type"]);
+    return 0;
+}
+
+// Linedrawer – Timeline sets x() itself
+var auditLine = d3.line()
+    .x(e => x(new Date(+e.date * 1000)))
+    .y(e => y(stepHeight(e)))
+    .curve(d3.curveStepBefore.radius(10));
+
+var auditLineFocus = d3.line()
+    .x(e => x2(new Date(+e.date * 1000)))
+    .y(e => y2(stepHeight(e)))
+    .curve(d3.curveStepBefore.radius(3));
+
+var label_radius = 10;
+
+
+// http://www.generatedata.com/ to the rescue
+d3.json("data/data.json", function(error, eventlog) {
+
+    var data = d3.nest()
+        .key(o => o.pid)
+        .sortValues((a, b) => a.date < b.date)
+        .entries(eventlog);
+
+    if (error) throw error;
+
+    x.domain(d3.extent(eventlog, function(d) {
+        return new Date(+d.date * 1000);
+    }));
+    x.domain([new Date(x.domain()[0].getTime() - 300000000), new Date(x.domain()[1].getTime() + 300000000)]);
+
+    y.domain([-3.5, 3.5]);
+    x2.domain(x.domain());
+    y2.domain(y.domain());
+
+    var g_beads = focus.selectAll("g")
+        .data(data)
+        .enter()
+        .append("g")
+        .attr("class", "beads");
+
+    g_beads.append("path")
+        .attr("class", "bead")
+        .attr("d", (a) => {
+            return auditLine(a.values);
+        });
+
+    g_beads_process =
+        g_beads.filter(o => o.values.length > 2);
+
+    g_beads_process.append("path")
+        .attr("class", "process");
+    g_beads_process.append("path")
+        .attr("class", "processheader");
+    g_beads_process.append("text")
+        .attr("text-anchor", "middle")
+        .attr("dy", 2)
+        .attr("class", "processheader");
+
+    g_beads_process.append("g")
+        .attr("class", "actors")
+        .selectAll("g")
+        .data(d => {
+            var o = d3.nest()
+                .key(o => stepHeight(o))
+                .sortKeys((a, b) => +a < +b)
+                .sortValues((a, b) => a.date < b.date)
+                .entries(d.values);
+
+            var actors = [];
+            o.forEach((actor) => {
+                actors.push({
+                    y: auditLine.y()(actor.values[0]),
+                    actor: actor.values[0].actor
+                });
+            })
+            return actors;
+        })
+
+    var g = g_beads.selectAll("g.bead").data(d => d.values)
+        .enter()
+        .append("g")
+        .attr("class", e => e.type + " bead");
+
+    g.append("circle")
+        .attr("class", "outercircle")
+        .attr("cx", label_radius + 2)
+        .attr("cy", label_radius + 2)
+        .attr("r", label_radius);
+
+    g.append("circle")
+        .attr("class", "innercircle")
+        .attr("cx", label_radius + 2)
+        .attr("cy", label_radius + 2)
+        .attr("r", label_radius - 2);
+
+    g.append("text")
+        .attr("class", "label")
+        .attr("x", label_radius)
+        .attr("y", d => stepHeight(d) < 0 ? label_radius + 34 : -label_radius+5)
+        .attr("text-anchor", "middle")
+        .text(o => o.type);
+
+    var labelmargin = 4 ;
+
+    g.insert("rect", ":first-child")
+        .attr("class", "label")
+        .attr("x", function(d) {
+            var text = this.parentNode.childNodes[2].getBBox();
+            return text.x - labelmargin;
+        })
+        .attr("y", function(d) {
+            var text = this.parentNode.childNodes[2].getBBox();
+            return text.y;
+        })
+        .attr("width", function(d) {
+            var text = this.parentNode.childNodes[2].getBBox();
+            return d.width = text.width + 2 * labelmargin;
+        })
+        .attr("height", function(d) {
+            var text = this.parentNode.childNodes[2].getBBox();
+            return d.height = text.height;
+        });
+
+
+    // focus.append("g")
+    //     .attr("class", "axis axis--x focus")
+    //     .attr("transform", "translate(0," + (y(0) - 14) + ")")
+    //     .call(xAxis);
+
+    // focus.append("g")
+    //     .attr("class", "axis axis--y")
+    //     .call(yAxis);
+
+    var c = context
+        .selectAll("g")
+        .data(data)
+        .enter()
+        .append("g");
+
+    c.append("path")
+        .attr("class", "bead")
+        .attr("d", (a) => {
+            return auditLineFocus(a.values);
+        });
+
+    c.selectAll("circle")
+        .data(o => o.values)
+        .enter()
+        .append("circle")
+        .attr("class", "contextcircle")
+        .attr("cx", d => auditLineFocus.x()(d))
+        .attr("cy", d => auditLineFocus.y()(d))
+        .attr("r", 4);
+
+
+    context.append("g")
+        .attr("class", "axis axis--x context")
+        .attr("transform", "translate(0," + height2 + ")")
+        .call(xAxis2);
+
+    context.append("g")
+        .attr("class", "brush")
+        .call(brush)
+        .call(brush.move, startRange);
+
+    svg.append("rect")
+        .attr("class", "zoom")
+        .attr("width", width)
+        .attr("height", height)
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+        .call(zoom);
+});
+
+function brushed() {
+    if (d3.event.sourceEvent && d3.event.sourceEvent.type === "zoom") return; // ignore brush-by-zoom
+    var s = d3.event.selection || x2.range();
+    x.domain(s.map(x2.invert, x2));
+    focus.selectAll("g").selectAll("path.bead").attr("d", (a) => {
+        return auditLine(a.values);
+    });
+    focus.selectAll("g").selectAll("g.bead")
+        .attr("transform", d => {
+            return "translate(" + (auditLine.x()(d) - label_radius - 2) + "," + (auditLine.y()(d) - label_radius - 2) + ")";
+        });
+
+    focus.select(".axis--x").call(xAxis);
+    svg.select(".zoom").call(zoom.transform, d3.zoomIdentity
+        .scale(width / (s[1] - s[0]))
+        .translate(-s[0], 0));
+
+    d3.select("path.area")
+        .attr("d", t => {
+                return area(t);
+            });
+
+
+    // fix x-axis into bar:
+    //axis_callback();
+}
+
+function zoomed() {
+    if (d3.event.sourceEvent && d3.event.sourceEvent.type === "brush") return; // ignore zoom-by-brush
+    var t = d3.event.transform;
+    x.domain(t.rescaleX(x2).domain());
+    focus.selectAll("g").selectAll("path.bead").attr("d", (a) => {
+        return auditLine(a.values);
+    });
+    focus.selectAll("g").selectAll("g.bead")
+        .attr("transform", d => "translate(" + (auditLine.x()(d) - label_radius - 2) + "," + (auditLine.y()(d) - label_radius - 2) + ")");
+
+    focus.select(".axis--x").call(xAxis);
+    context.select(".brush").call(brush.move, x.range().map(t.invertX, t));
+
+    // fix x-axis into bar:
+ //   axis_callback();
+}
+</script>

@@ -1,0 +1,144 @@
+[
+{
+	"title": "Nyemission",
+	"subtitle": "ERIK B",
+	"type": "saving",
+	"events": [
+		{
+			"event": "Köpt 120 ERIK B",
+			"actor": "bank",
+			"date": "2017-05-17T08:02:17.329Z"
+		},
+		{
+			"event": "Försäljning 120 TR",
+			"actor": "me",
+			"date": "2017-05-14T08:02:17.329Z"
+		},
+		{
+			"event": "Registrerat 60 ERIK B",
+			"actor": "bank",
+			"date": "2017-05-16T08:02:17.329Z"
+		},
+		{
+			"event": "180 teckningsrätter (depå \"lilla väskan\")",
+			"actor": "me",
+			"date": "2017-05-11T08:02:17.329Z"
+		}
+	]
+},
+{
+	"title": "Löptid bolån",
+	"subtitle": ".25%-lånet",
+	"type": "loan",
+	"events": [
+		{
+			"event": "Lån omlagt",
+			"actor": "bank",
+			"date": "2017-04-17T08:02:17.329Z"
+		},
+		{
+			"event": "Ärendet registrerat",
+			"actor": "bank",
+			"date": "2017-04-14T08:02:17.329Z"
+		},
+		{
+			"event": "Uppdrag låneomläggning",
+			"actor": "me",
+			"date": "2017-04-16T08:02:17.329Z"
+		}
+	]
+},
+{
+	"title": "Spärrat kort",
+	"subtitle": "VISA **24",
+	"type": "payment",
+	"events": [
+		{
+			"event": "Kortet automatspärrat",
+			"actor": "bank",
+			"date": "2017-03-17T08:02:17.329Z"
+		},
+		{
+			"event": "Misstanke om bedrägeri",
+			"actor": "bank",
+			"date": "2017-03-14T08:02:17.329Z"
+		},
+		{
+			"event": "Uttag Palace Hotel Nairobi",
+			"actor": "me",
+			"date": "2017-03-13T08:03:17.329Z"
+		},
+		{
+			"event": "Uttag Systembolaget Täby",
+			"actor": "me",
+			"date": "2017-03-13T08:02:17.329Z"
+		}
+	]
+},
+{
+	"title": "Nyemission",
+	"subtitle": "ASTRA ZENECA B",
+	"type": "saving",
+	"events": [
+		{
+			"event": "Köpt 300 ASTRA B",
+			"actor": "bank",
+			"date": "2016-05-17T08:02:17.329Z"
+		},
+		{
+			"event": "Registrerat 300 ASTRA B",
+			"actor": "bank",
+			"date": "2016-05-16T08:02:17.329Z"
+		},
+		{
+			"event": "150 teckningsrätter (depå \"stora väskan\")",
+			"actor": "me",
+			"date": "2016-05-11T08:02:17.329Z"
+		}
+	]
+},
+{
+	"title": "Löptid bolån",
+	"subtitle": "Min 7-åring",
+	"type": "loan",
+	"events": [
+		{
+			"event": "Lån omlagt",
+			"actor": "bank",
+			"date": "2016-04-17T08:02:17.329Z"
+		},
+		{
+			"event": "Ärendet registrerat",
+			"actor": "bank",
+			"date": "2016-04-14T08:02:17.329Z"
+		},
+		{
+			"event": "Uppdrag låneomläggning",
+			"actor": "me",
+			"date": "2016-04-16T08:02:17.329Z"
+		}
+	]
+},
+{
+	"title": "Nytt kort",
+	"subtitle": "VISA **24",
+	"type": "payment",
+	"events": [
+		{
+			"event": "Kortet utskickat",
+			"actor": "bank",
+			"date": "2016-03-17T08:02:17.329Z"
+		},
+		{
+			"event": "Emottagit ärendet",
+			"actor": "bank",
+			"date": "2016-03-14T08:02:17.329Z"
+		},
+		{
+			"event": "Beställning nytt kort",
+			"actor": "me",
+			"date": "2016-03-13T08:02:17.329Z"
+		}
+	]
+}
+]
